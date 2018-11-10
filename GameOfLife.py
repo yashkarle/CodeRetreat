@@ -10,7 +10,10 @@ def num_neigh(grid, x, y):
     return sum - grid[y][x]
 
 def should_die(grid, x,y):
-    return True
+    if num_neigh(grid, x, y) < 2 or num_neigh(grid, x, y) > 4:
+        return True
+    else:
+        return False
 
 class TestStringMethods(unittest.TestCase):
     grid = [[1, 0, 1],
@@ -22,6 +25,7 @@ class TestStringMethods(unittest.TestCase):
 
     def test_should_die(self):
         self.assertEqual(should_die(self.grid, 2, 2), True)
+        #self.assertEqual(should_die(self.grid, 1, 1), False)
 
 if __name__ == '__main__':
     unittest.main()
