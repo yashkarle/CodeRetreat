@@ -37,6 +37,11 @@ def new_gen(grid):
     new_grid = [[0, 1, 0],
             [0, 1, 0],
             [0, 0, 0]]
+    #new_grid = []
+    #for i in range(len(grid)):
+    #    new_grid[i] = []
+    #    for j in range(len(grid))
+    #        new_grid[i].append(new_cell(grid,j,i))
     return new_grid
 
 class TestStringMethods(unittest.TestCase):
