@@ -27,6 +27,10 @@ def is_new_born(grid, x, y):
     return False
 
 def new_cell(grid, x, y):
+    if grid[x][y] and should_live(grid, x, y):
+        return 1
+    elif not grid[x][y] and is_new_born(grid, x, y):
+        return 1
     return 0
 
 class TestStringMethods(unittest.TestCase):
@@ -53,7 +57,8 @@ class TestStringMethods(unittest.TestCase):
 
     def test_new_cell(self):
         self.assertEqual(new_cell(self.grid, 0, 0), 0)
-
+        self.assertEqual(new_cell(self.grid, 1, 1), 1)
+        self.assertEqual(new_cell(self.grid, 1, 0), 1)
 
 if __name__ == '__main__':
     unittest.main()
