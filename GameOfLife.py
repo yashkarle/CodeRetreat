@@ -5,7 +5,7 @@ def num_neigh(grid, x, y):
     sum = 0
     for i in iterators:
         for j in iterators:
-            if 0<x+i<len(grid) and 0<y+j<len(grid):
+            if 0<=x+i<len(grid) and 0<=y+j<len(grid):
                 sum = sum + grid[y+j][x+i]
     return sum - grid[y][x]
 
@@ -21,11 +21,12 @@ class TestStringMethods(unittest.TestCase):
             [0, 0, 0]]
 
     def test_neighbours(self):
-        self.assertEqual(num_neigh(self.grid,2,2), 0)
+        self.assertEqual(num_neigh(self.grid,1,1), 3)
 
     def test_should_die(self):
         self.assertEqual(should_die(self.grid, 2, 2), True)
-        #self.assertEqual(should_die(self.grid, 1, 1), False)
+        self.assertEqual(should_die(self.grid, 1, 1), False)
+        self.assertEqual(should_die(self.grid, 0, 1), True)
 
 if __name__ == '__main__':
     unittest.main()
