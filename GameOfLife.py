@@ -15,6 +15,11 @@ def should_die(grid, x,y):
     else:
         return False
 
+def should_live(grid, x, y):
+    # if 1 < num_neigh(grid ,x, y) < 5:
+    #
+    return False
+
 class TestStringMethods(unittest.TestCase):
     grid = [[1, 0, 1],
             [1, 0, 0],
@@ -27,6 +32,10 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual(should_die(self.grid, 2, 2), True)
         self.assertEqual(should_die(self.grid, 1, 1), False)
         self.assertEqual(should_die(self.grid, 0, 1), True)
+
+    def test_should_live(self):
+        self.assertEqual(should_live(self.grid, 0, 1), False)
+
 
 if __name__ == '__main__':
     unittest.main()
