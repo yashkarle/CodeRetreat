@@ -16,9 +16,13 @@ def should_die(grid, x,y):
         return False
 
 def should_live(grid, x, y):
-    # if 1 < num_neigh(grid ,x, y) < 5:
-    #
-    return False
+    if 1 < num_neigh(grid ,x, y) < 5:
+        return True
+    else:
+        return False
+
+def is_new_born(grid, x, y):
+        return False
 
 class TestStringMethods(unittest.TestCase):
     grid = [[1, 0, 1],
@@ -35,7 +39,12 @@ class TestStringMethods(unittest.TestCase):
 
     def test_should_live(self):
         self.assertEqual(should_live(self.grid, 0, 1), False)
+        self.assertEqual(should_live(self.grid, 1, 1), True)
+        # self.assertEqual(should_live(self.grid, 0, 1), False)
 
+
+    def test_new_born(self):
+        self.assertEqual(is_new_born(self.grid, 0, 0), False)
 
 if __name__ == '__main__':
     unittest.main()
