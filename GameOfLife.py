@@ -34,23 +34,35 @@ def new_cell(grid, x, y):
     return 0
 
 def new_gen(grid):
-    new_grid = [[0, 1, 0],
-            [0, 1, 0],
-            [0, 0, 0]]
-    #new_grid = []
-    #for i in range(len(grid)):
-    #    new_grid[i] = []
-    #    for j in range(len(grid))
-    #        new_grid[i].append(new_cell(grid,j,i))
+    #new_grid = [[0, 1, 0],
+    #        [0, 1, 0],
+    #        [0, 0, 0]]
+    new_grid = []
+    for i in range(len(grid)):
+        new_grid.append([])
+        for j in range(len(grid)):
+            new_grid[i].append(new_cell(grid,j,i))
     return new_grid
+
+def print_grid(grid):
+    return ""
 
 class TestStringMethods(unittest.TestCase):
     grid = [[1, 0, 1],
             [1, 0, 0],
             [0, 0, 0]]
+
+    grid2 = [[0,1,0],
+             [0,1,0],
+             [0,1,0]]
+
     new_grid = [[0, 1, 0],
             [0, 1, 0],
             [0, 0, 0]]
+
+    new_grid2 = [[0, 0, 0],
+                [1, 1, 1],
+                [0, 0, 0]]
 
     def test_neighbours(self):
         self.assertEqual(num_neigh(self.grid,1,1), 3)
@@ -76,6 +88,12 @@ class TestStringMethods(unittest.TestCase):
 
     def test_new_gen(self):
         self.assertEqual(new_gen(self.grid), self.new_grid)
+        self.assertEqual(new_gen(self.grid2), self.new_grid2)
+
+    def test_print_grid(self):
+        self.assertEqual(print_grid(self.grid2), "")
+
 
 if __name__ == '__main__':
     unittest.main()
+
