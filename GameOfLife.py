@@ -9,15 +9,19 @@ def num_neigh(grid, x, y):
                 sum = sum + grid[y+j][x+i]
     return sum - grid[y][x]
 
+def should_die(grid, x,y):
+    return True
 
 class TestStringMethods(unittest.TestCase):
+    grid = [[1, 0, 1],
+            [1, 0, 0],
+            [0, 0, 0]]
 
     def test_neighbours(self):
-        grid=[[1,0,1],
-              [1,0,0],
-              [0,0,0]]
-        self.assertEqual(num_neigh(grid,2,2), 0)
+        self.assertEqual(num_neigh(self.grid,2,2), 0)
 
+    def test_should_die(self):
+        self.assertEqual(should_die(self.grid, 2, 2), True)
 
 if __name__ == '__main__':
     unittest.main()
