@@ -33,9 +33,18 @@ def new_cell(grid, x, y):
         return 1
     return 0
 
+def new_gen(grid):
+    new_grid = [[0, 1, 0],
+            [0, 1, 0],
+            [0, 0, 0]]
+    return new_grid
+
 class TestStringMethods(unittest.TestCase):
     grid = [[1, 0, 1],
             [1, 0, 0],
+            [0, 0, 0]]
+    new_grid = [[0, 1, 0],
+            [0, 1, 0],
             [0, 0, 0]]
 
     def test_neighbours(self):
@@ -59,6 +68,9 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual(new_cell(self.grid, 0, 0), 0)
         self.assertEqual(new_cell(self.grid, 1, 1), 1)
         self.assertEqual(new_cell(self.grid, 1, 0), 1)
+
+    def test_new_gen(self):
+        self.assertEqual(new_gen(self.grid), self.new_grid)
 
 if __name__ == '__main__':
     unittest.main()
