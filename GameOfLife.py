@@ -1,99 +1,73 @@
-import unittest
+class GameOfLife:
+    def __init__(self):
+        self.board = [[0, 0, 0],
+                      [0, 0, 0],
+                      [0, 0, 0]]
+        self.height = len(self.board)
+        self.width = len(self.board[0])
 
-def num_neigh(grid, x, y):
-    iterators = [-1,0,1]
-    sum = 0
-    for i in iterators:
-        for j in iterators:
-            if 0<=x+i<len(grid) and 0<=y+j<len(grid):
-                sum = sum + grid[y+j][x+i]
-    return sum - grid[y][x]
+    # returns the value at the cell (x,y)
+    def get_cell_value(self, x, y):
+        return self.board[x][y]
 
-def should_die(grid, x,y):
-    if num_neigh(grid, x, y) < 2 or num_neigh(grid, x, y) > 4:
-        return True
-    else:
-        return False
+    # sets the cell value at (x,y)
+    def set_cell_value(self, x, y, val):
+        self.board[x][y] = val
 
-def should_live(grid, x, y):
-    if 1 < num_neigh(grid ,x, y) < 5:
-        return True
-    else:
-        return False
+    # we plan to calculate count of live neighbours
+    def get_live_neighbours_count(self, x, y):
+        count = 0
+        iterator = [-1, 0, 1]
 
-def is_new_born(grid, x, y):
-    if num_neigh(grid, x, y) == 3:
-        return True
-    return False
+        for i in iterator:
+            for j in iterator:
+                if (0 <= (x+i) < self.width) and (0 <= (y+j) < self.height) and self.get_cell_value(x+i, y+j):
+                    count += 1
 
-def new_cell(grid, x, y):
-    if grid[x][y] and should_live(grid, x, y):
-        return 1
-    elif not grid[x][y] and is_new_born(grid, x, y):
-        return 1
-    return 0
+        return count - self.get_cell_value(x, y)
 
-def new_gen(grid):
-    #new_grid = [[0, 1, 0],
-    #        [0, 1, 0],
-    #        [0, 0, 0]]
-    new_grid = []
-    for i in range(len(grid)):
-        new_grid.append([])
-        for j in range(len(grid)):
-            new_grid[i].append(new_cell(grid,j,i))
-    return new_grid
+    # calculates the new cell values depending upon the rules of the game
+    def get_new_cell_value(self, x, y):
+        num_live_neighbours = self.get_live_neighbours_count(x, y)
 
-def print_grid(grid):
-    return ""
+        if num_live_neighbours == 3 or (num_live_neighbours == 2 and self.get_cell_value(x, y)):
+            return 1
+        return 0
 
-class TestStringMethods(unittest.TestCase):
-    grid = [[1, 0, 1],
-            [1, 0, 0],
-            [0, 0, 0]]
-
-    grid2 = [[0,1,0],
-             [0,1,0],
-             [0,1,0]]
-
-    new_grid = [[0, 1, 0],
-            [0, 1, 0],
-            [0, 0, 0]]
-
-    new_grid2 = [[0, 0, 0],
-                [1, 1, 1],
-                [0, 0, 0]]
-
-    def test_neighbours(self):
-        self.assertEqual(num_neigh(self.grid,1,1), 3)
-
-    def test_should_die(self):
-        self.assertEqual(should_die(self.grid, 2, 2), True)
-        self.assertEqual(should_die(self.grid, 1, 1), False)
-        self.assertEqual(should_die(self.grid, 0, 1), True)
-
-    def test_should_live(self):
-        self.assertEqual(should_live(self.grid, 0, 1), False)
-        self.assertEqual(should_live(self.grid, 1, 1), True)
-        # self.assertEqual(should_live(self.grid, 0, 1), False)
-
-
-    def test_new_born(self):
-        self.assertEqual(is_new_born(self.grid, 0, 0), False)
-
-    def test_new_cell(self):
-        self.assertEqual(new_cell(self.grid, 0, 0), 0)
-        self.assertEqual(new_cell(self.grid, 1, 1), 1)
-        self.assertEqual(new_cell(self.grid, 1, 0), 1)
-
-    def test_new_gen(self):
-        self.assertEqual(new_gen(self.grid), self.new_grid)
-        self.assertEqual(new_gen(self.grid2), self.new_grid2)
-
-    def test_print_grid(self):
-        self.assertEqual(print_grid(self.grid2), "")
+    # print the board
+    def print_board(self):
+        for i in range(self.width):
+            for j in range(self.height):
+                if self.get_cell_value(i, j):
+                    print("X", end=" ")
+                else:
+                    print("O", end=" ")
+            print()
 
 
 if __name__ == '__main__':
-    unittest.main()
+    g = GameOfLife()
+    g.set_cell_value(0, 0, 0)
+    g.set_cell_value(0, 1, 1)
+    g.set_cell_value(0, 2, 0)
+    g.set_cell_value(1, 0, 0)
+    g.set_cell_value(1, 1, 1)
+    g.set_cell_value(1, 2, 0)
+    g.set_cell_value(2, 0, 0)
+    g.set_cell_value(2, 1, 1)
+    g.set_cell_value(2, 2, 0)
+    g.print_board()
 
+    print()
+
+    result = GameOfLife()
+    result.set_cell_value(0, 0, g.get_new_cell_value(0, 0))
+    result.set_cell_value(0, 1, g.get_new_cell_value(0, 1))
+    result.set_cell_value(0, 2, g.get_new_cell_value(0, 2))
+    result.set_cell_value(1, 0, g.get_new_cell_value(1, 0))
+    result.set_cell_value(1, 1, g.get_new_cell_value(1, 1))
+    result.set_cell_value(1, 2, g.get_new_cell_value(1, 2))
+    result.set_cell_value(2, 0, g.get_new_cell_value(2, 0))
+    result.set_cell_value(2, 1, g.get_new_cell_value(2, 1))
+    result.set_cell_value(2, 2, g.get_new_cell_value(2, 2))
+    result.print_board()
